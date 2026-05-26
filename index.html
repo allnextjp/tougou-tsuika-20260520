@@ -6,7 +6,7 @@
   <title>統合ツール 追加アカウント | NEXTカスタマーサポートデスク</title>
   <meta
     name="description"
-    content="統合ツールをご利用中のパートナー様向け。追加アカウントの発行で、取得データ数の向上・作業時間の短縮・出品ペースの改善に対応。月額¥11,000(税込)。"
+    content="統合ツールをご利用中の方へ。追加アカウントで情報取得を並行化し、待機時間を分散。同じ作業時間で精査できる商品数を増やせます。1日あたり約367円・月額¥11,000(税込)。"
   />
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -51,7 +51,7 @@
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-    gtag('config', 'G-2B1FF9TSL8');
+    gtag('config', 'G-2B1FF9TSL8', { lp: 'japan' });
   </script>
 
   <style>
@@ -84,6 +84,34 @@
     .faq-item.open .faq-icon {
       transform: rotate(45deg);
     }
+    .tlf.tlf-armed .tlf-row {
+      transform: scaleX(0.4);
+      transform-origin: left center;
+      opacity: 0;
+    }
+    .tlf.is-playing .tlf-row {
+      animation: tlf-grow .7s cubic-bezier(.22,.61,.36,1) forwards;
+      animation-delay: var(--d, 0s);
+    }
+    @keyframes tlf-grow {
+      to { transform: scaleX(1); opacity: 1; }
+    }
+    @keyframes tlf-bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(4px); }
+    }
+    .tlf-bounce { animation: tlf-bounce 1.6s ease-in-out infinite; }
+    @keyframes cta-pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.03); }
+    }
+    .cta-pulse { animation: cta-pulse 2.4s ease-in-out infinite; }
+    .cta-pulse:hover { animation-play-state: paused; }
+    @media (prefers-reduced-motion: reduce) {
+      .tlf.tlf-armed .tlf-row { transform: none; opacity: 1; animation: none !important; }
+      .tlf-bounce { animation: none; }
+      .cta-pulse { animation: none; }
+    }
   </style>
 </head>
 <body class="font-sans text-slate-800 antialiased">
@@ -106,50 +134,104 @@
     <main class="pb-24 sm:pb-0">
       <section id="hero-section" class="relative overflow-hidden">
         <div class="mx-auto max-w-7xl px-5 py-16 sm:px-6 sm:py-20 lg:px-8 lg:py-24">
-          <div class="grid items-center gap-12 lg:grid-cols-[1.05fr_0.95fr]">
+          <div class="mx-auto max-w-3xl">
             <div class="fade-in">
               <div class="mb-6 inline-flex items-center gap-2 rounded-full border border-brand-200 bg-brand-50 px-4 py-2 text-sm font-medium text-brand-800">
                 <span class="h-2 w-2 rounded-full bg-brand-500"></span>
-                既存のご利用環境を活かした追加導入
+                統合ツールご利用中の方へ / 1日あたり約367円〜
               </div>
 
               <h1 class="text-4xl font-extrabold leading-tight tracking-tight text-slate-900 sm:text-5xl lg:text-6xl">
-                いつもの統合ツールを、<br class="hidden sm:block" />
-                もう1つ。
+                同じ待ち時間で、<br class="hidden sm:block" />
+                「2つの情報取得」を同時進行。
               </h1>
 
               <p class="mt-6 max-w-2xl text-base leading-8 text-slate-600 sm:text-lg">
-                統合ツールの追加アカウントで、取得データ数と作業時間を同時に改善。
-                今お使いの環境はそのままに、ご自身で操作いただけるアカウントを追加し、複数アカウントでの並行運用を可能にします。
+                統合ツールをもう1アカウント。情報取得待ちによるロスを減らし、
+                <span class="font-semibold text-slate-900">よりスムーズな精査・出品サイクル</span>を実現します。
               </p>
 
               <p class="mt-4 max-w-2xl text-sm leading-7 text-slate-500 sm:text-base">
-                新しい仕組みを覚え直す必要はありません。使い慣れた統合ツールの延長で、
-                出品体制をもう一段広げられます。
+                初期運用時の「止まる時間」を減らし、よりテンポよく商品検証を進められる環境へ。
+                使い慣れた統合ツールの延長で、運用効率をもう一段高められます。
               </p>
 
-              <div class="mt-8 grid gap-3 sm:grid-cols-3 text-sm">
-                <div class="rounded-2xl border border-slate-200 bg-white p-4 text-slate-700 shadow-sm">
-                  取得データ数の向上
+              <!-- FV内ミニBefore/After:同一時間軸・アカウント①②ラベル・待機対比・スクロールで順次アニメーション -->
+              <div id="tlf" class="tlf mt-8 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+                <!-- 同じ作業時間の目盛り -->
+                <div class="mb-3 flex items-center gap-2">
+                  <span class="text-[10px] font-semibold uppercase tracking-[0.14em] text-slate-400">同じ作業時間</span>
+                  <span class="h-px flex-1 bg-slate-200"></span>
                 </div>
-                <div class="rounded-2xl border border-slate-200 bg-white p-4 text-slate-700 shadow-sm">
-                  時間短縮で運用負荷を軽減
+
+                <!-- Before -->
+                <div class="flex items-center gap-3">
+                  <div class="w-14 shrink-0">
+                    <p class="text-[11px] font-bold text-slate-500">Before</p>
+                    <p class="text-[10px] text-slate-400">1アカウント</p>
+                  </div>
+                  <div class="tlf-row flex h-7 flex-1 overflow-hidden rounded-lg" style="--d:0s">
+                    <div class="flex items-center justify-center bg-slate-200 text-[10px] font-medium text-slate-600" style="width:18%">取得</div>
+                    <div class="flex items-center justify-center bg-amber-200 text-[10px] font-semibold text-amber-800" style="width:30%">待機…</div>
+                    <div class="flex items-center justify-center bg-brand-100 text-[10px] font-medium text-brand-700" style="width:18%">精査</div>
+                    <div class="flex items-center justify-center bg-slate-200 text-[10px] font-medium text-slate-600" style="width:18%">取得</div>
+                    <div class="flex items-center justify-center bg-amber-200 text-[10px] font-semibold text-amber-800" style="width:16%">待機…</div>
+                  </div>
                 </div>
-                <div class="rounded-2xl border border-slate-200 bg-white p-4 text-slate-700 shadow-sm">
-                  複数アカウント運用に対応
+                <p class="mt-1 pl-[4.25rem] text-[11px] text-slate-400">待機が多く、精査の機会は限られる</p>
+
+                <!-- After -->
+                <div class="mt-4 flex items-start gap-3">
+                  <div class="w-14 shrink-0 pt-1">
+                    <p class="text-[11px] font-bold text-brand-700">After</p>
+                    <p class="text-[10px] text-brand-600">2アカウント</p>
+                  </div>
+                  <div class="flex-1 space-y-1.5">
+                    <div class="flex items-center gap-2">
+                      <span class="w-3 shrink-0 text-[10px] font-bold text-slate-400">①</span>
+                      <div class="tlf-row flex h-6 flex-1 overflow-hidden rounded-lg" style="--d:.35s">
+                        <div class="flex items-center justify-center bg-slate-200 text-[10px] font-medium text-slate-600" style="width:18%">取得</div>
+                        <div class="flex items-center justify-center bg-brand-100 text-[10px] font-medium text-brand-700" style="width:18%">精査</div>
+                        <div class="flex items-center justify-center bg-slate-200 text-[10px] font-medium text-slate-600" style="width:18%">取得</div>
+                        <div class="flex items-center justify-center bg-brand-100 text-[10px] font-medium text-brand-700" style="width:18%">精査</div>
+                        <div class="flex items-center justify-center bg-slate-200 text-[10px] font-medium text-slate-600" style="width:28%">取得</div>
+                      </div>
+                    </div>
+                    <div class="flex items-center gap-2">
+                      <span class="w-3 shrink-0 text-[10px] font-bold text-slate-400">②</span>
+                      <div class="tlf-row flex h-6 flex-1 overflow-hidden rounded-lg" style="--d:.6s">
+                        <div class="flex items-center justify-center bg-amber-200 text-[10px] font-semibold text-amber-800" style="width:12%">待機</div>
+                        <div class="flex items-center justify-center bg-slate-200 text-[10px] font-medium text-slate-600" style="width:18%">取得</div>
+                        <div class="flex items-center justify-center bg-brand-100 text-[10px] font-medium text-brand-700" style="width:18%">精査</div>
+                        <div class="flex items-center justify-center bg-slate-200 text-[10px] font-medium text-slate-600" style="width:18%">取得</div>
+                        <div class="flex items-center justify-center bg-brand-100 text-[10px] font-medium text-brand-700" style="width:34%">精査</div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
+                <p class="mt-1 pl-[4.25rem] text-[11px] font-medium text-brand-700">待機の裏で作業が進み、精査の機会が増える</p>
+
+                <p class="mt-4 text-xs leading-6 text-slate-500">
+                  ※同じ作業時間でも、取得を並行化することで<span class="font-semibold text-slate-700">待機時間が分散</span>し、精査に充てられる機会を増やしやすくなります。
+                </p>
               </div>
+
+              <!-- スクロール誘導サイン -->
+              <a href="#after-image" class="tlf-cue group mt-3 flex items-center justify-center gap-2 text-sm text-brand-700 transition hover:text-brand-800">
+                <span>1日あたり約367円で、何が変わるのか見る</span>
+                <svg class="tlf-bounce h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"></path><path d="m5 12 7 7 7-7"></path></svg>
+              </a>
 
               <div class="mt-10">
                 <a
                   href="https://payment.nextjp.co.jp/subscribe/uAzExW/"
-                  onclick="gtag('event', 'cta_click', {cta_location: 'hero', cta_type: 'subscribe'});"
-                  class="inline-flex items-center justify-center rounded-xl bg-brand-700 px-8 py-5 text-base font-bold text-white shadow-soft transition-all duration-200 hover:scale-[1.02] hover:bg-brand-800 focus:outline-none focus:ring-4 focus:ring-brand-200"
+                  onclick="gtag('event', 'cta_click', {cta_location: 'hero', cta_type: 'subscribe', lp: 'japan'});"
+                  class="cta-pulse inline-flex items-center justify-center rounded-xl bg-brand-700 px-8 py-5 text-base font-bold text-white shadow-soft transition-all duration-200 hover:scale-[1.02] hover:bg-brand-800 focus:outline-none focus:ring-4 focus:ring-brand-200"
                 >
                   追加アカウントを申し込む →
                 </a>
                 <p class="mt-3 text-sm leading-7 text-slate-500">
-                  クレジットカード登録後、申請フォームに進みます / 月額¥11,000(税込)
+                  月額¥11,000(税込) = <span class="font-semibold text-slate-700">1日あたり約367円</span>で、もう1アカウント分の並行リサーチ枠を / カード登録後、申請フォームに進みます
                 </p>
               </div>
 
@@ -178,88 +260,135 @@
                 </p>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
 
-            <div class="fade-in lg:justify-self-end">
-              <div class="relative mx-auto w-full max-w-xl rounded-[28px] border border-slate-200 bg-white p-4 shadow-soft sm:p-5">
-                <div class="rounded-[22px] bg-slate-50 p-4 sm:p-5">
-                  <div class="mb-4 flex items-center justify-between">
-                    <div>
-                      <p class="text-xs font-semibold uppercase tracking-[0.18em] text-brand-700">管理画面イメージ</p>
-                      <p class="mt-1 text-sm text-slate-500">統合ツール 追加アカウント利用イメージ</p>
-                    </div>
-                    <div class="flex gap-2">
-                      <span class="h-3 w-3 rounded-full bg-slate-300"></span>
-                      <span class="h-3 w-3 rounded-full bg-slate-300"></span>
-                      <span class="h-3 w-3 rounded-full bg-slate-300"></span>
-                    </div>
-                  </div>
+      <!-- 共感セクション:こんなお悩みはありませんか? -->
+      <section class="fade-in">
+        <div class="mx-auto max-w-5xl px-5 pt-6 pb-2 sm:px-6 lg:px-8">
+          <div class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+            <h2 class="text-center text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">こんなお悩みはありませんか？</h2>
+            <ul class="mx-auto mt-7 grid max-w-3xl gap-3 sm:grid-cols-2">
+              <li class="flex items-start gap-3 rounded-2xl bg-slate-50 px-4 py-3">
+                <span class="mt-0.5 shrink-0 text-brand-600"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6v6l4 2"></path><circle cx="12" cy="12" r="9"></circle></svg></span>
+                <p class="text-sm leading-7 text-slate-700">情報取得待ちで作業が止まる</p>
+              </li>
+              <li class="flex items-start gap-3 rounded-2xl bg-slate-50 px-4 py-3">
+                <span class="mt-0.5 shrink-0 text-brand-600"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6v6l4 2"></path><circle cx="12" cy="12" r="9"></circle></svg></span>
+                <p class="text-sm leading-7 text-slate-700">精査したい商品が多いのに、テンポよく進まない</p>
+              </li>
+              <li class="flex items-start gap-3 rounded-2xl bg-slate-50 px-4 py-3">
+                <span class="mt-0.5 shrink-0 text-brand-600"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6v6l4 2"></path><circle cx="12" cy="12" r="9"></circle></svg></span>
+                <p class="text-sm leading-7 text-slate-700">空き時間が「待ち時間」になってしまう</p>
+              </li>
+              <li class="flex items-start gap-3 rounded-2xl bg-slate-50 px-4 py-3">
+                <span class="mt-0.5 shrink-0 text-brand-600"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6v6l4 2"></path><circle cx="12" cy="12" r="9"></circle></svg></span>
+                <p class="text-sm leading-7 text-slate-700">もっと効率よく出品まで進めたい</p>
+              </li>
+              <li class="flex items-start gap-3 rounded-2xl bg-slate-50 px-4 py-3 sm:col-span-2 sm:mx-auto sm:w-1/2">
+                <span class="mt-0.5 shrink-0 text-brand-600"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6v6l4 2"></path><circle cx="12" cy="12" r="9"></circle></svg></span>
+                <p class="text-sm leading-7 text-slate-700">短期間で試行回数を増やしたい</p>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
 
-                  <div class="grid grid-cols-1 gap-4 sm:grid-cols-[180px_minmax(0,1fr)] lg:grid-cols-[190px_minmax(0,1fr)]">
-                    <div class="rounded-2xl bg-white p-4 shadow-sm">
-                      <div class="flex items-center justify-between">
-                        <p class="text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-500">アカウント切替</p>
-                        <span class="rounded-full bg-brand-50 px-2.5 py-1 text-[10px] font-medium text-brand-700">2アカウント</span>
-                      </div>
+      <!-- ファーストスクロール:導入後のイメージ(3軸)を最上部に集約 -->
+      <section id="after-image" class="fade-in scroll-mt-20">
+        <div class="mx-auto max-w-7xl px-5 pt-4 pb-12 sm:px-6 sm:pt-6 lg:px-8">
+          <div class="mx-auto max-w-3xl text-center">
+            <p class="text-sm font-semibold uppercase tracking-[0.18em] text-brand-700">After Image</p>
+            <h2 class="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">追加後、運用はこう変わります</h2>
+            <p class="mt-4 text-base leading-8 text-slate-600">
+              「待ち時間」を「次の作業時間」へ変えると、運用はどう変わるのか。導入前にイメージいただけます。
+            </p>
+          </div>
 
-                      <div class="mt-4 space-y-3">
-                        <label class="flex cursor-pointer items-start gap-3 rounded-2xl border border-slate-200 bg-slate-50 px-3 py-3 transition hover:border-brand-200 hover:bg-brand-50/40">
-                          <span class="mt-1 flex h-4 w-4 items-center justify-center rounded-full border border-slate-300 bg-white">
-                            <span class="h-2 w-2 rounded-full bg-slate-300"></span>
-                          </span>
-                          <span class="min-w-0">
-                            <span class="block break-keep text-base font-semibold leading-6 text-slate-700">メインアカウント</span>
-                            <span class="mt-1 block break-keep text-xs leading-5 text-slate-500">現在ご利用中の環境</span>
-                          </span>
-                        </label>
+          <div class="mt-10 grid gap-5 md:grid-cols-3">
+            <div class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+              <div class="inline-flex rounded-full bg-brand-50 px-3 py-1 text-xs font-semibold text-brand-700">どう効率化できるか</div>
+              <ul class="mt-5 space-y-3 text-sm leading-7 text-slate-700">
+                <li class="flex gap-2"><span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-brand-500"></span>情報取得を並行化し、待機時間を分散</li>
+                <li class="flex gap-2"><span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-brand-500"></span>リサーチ〜精査までのサイクルを高速化</li>
+                <li class="flex gap-2"><span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-brand-500"></span>同じ作業時間の中で、より多くの商品精査へ</li>
+                <li class="flex gap-2"><span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-brand-500"></span>待機による停滞感が減り、作業ストレスを軽減</li>
+              </ul>
+            </div>
+            <div class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+              <div class="inline-flex rounded-full bg-brand-50 px-3 py-1 text-xs font-semibold text-brand-700">最初に何をやるべきか</div>
+              <ul class="mt-5 space-y-3 text-sm leading-7 text-slate-700">
+                <li class="flex gap-2"><span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-brand-500"></span>リサーチの方向性を決めてから着手</li>
+                <li class="flex gap-2"><span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-brand-500"></span>商品点数形成を意識した初期運用</li>
+                <li class="flex gap-2"><span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-brand-500"></span>登録するキーワードのバリエーション設計</li>
+              </ul>
+            </div>
+            <div class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+              <div class="inline-flex rounded-full bg-brand-50 px-3 py-1 text-xs font-semibold text-brand-700">どういう運用にすべきか</div>
+              <ul class="mt-5 space-y-3 text-sm leading-7 text-slate-700">
+                <li class="flex gap-2"><span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-brand-500"></span>情報取得待ちの時間を減らす運用設計</li>
+                <li class="flex gap-2"><span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-brand-500"></span>試行回数を増やしやすいリサーチサイクル構築</li>
+                <li class="flex gap-2"><span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-brand-500"></span>ストアフロント情報の効率的な登録</li>
+              </ul>
+            </div>
+          </div>
 
-                        <label class="flex cursor-pointer items-start gap-3 rounded-2xl border border-brand-200 bg-brand-50/80 px-3 py-3 shadow-sm">
-                          <span class="mt-1 flex h-4 w-4 items-center justify-center rounded-full border border-brand-500 bg-white">
-                            <span class="h-2 w-2 rounded-full bg-brand-600"></span>
-                          </span>
-                          <span class="min-w-0">
-                            <span class="block break-keep text-base font-semibold leading-6 text-slate-900">追加アカウント</span>
-                            <span class="mt-1 block break-keep text-xs leading-5 text-slate-600">追加導入後に切替可能</span>
-                          </span>
-                        </label>
-                      </div>
-                    </div>
+          <!-- 複利的な積み上げ:概念図(目盛りなし)・最初から最大の差を表示 -->
+          <div class="mt-8 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+            <div class="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+              <div>
+                <h3 class="text-lg font-bold text-slate-900">早く増やすほど、差は大きく開く</h3>
+                <p class="mt-1 text-sm leading-7 text-slate-600">商品点数の積み上げは後から追いつきにくく、繁忙期前ほど効いてきます。</p>
+              </div>
+              <div class="flex items-center gap-4 text-xs text-slate-500">
+                <span class="inline-flex items-center gap-1.5"><span class="h-0.5 w-4 rounded bg-brand-600"></span>環境を増やした場合</span>
+                <span class="inline-flex items-center gap-1.5"><span class="h-0 w-4 border-t-2 border-dashed border-slate-400"></span>増やさなかった場合</span>
+              </div>
+            </div>
 
-                    <div class="space-y-4">
-                      <div class="rounded-2xl bg-white p-4 shadow-sm">
-                        <div class="flex items-center justify-between">
-                          <div class="h-3 w-16 rounded bg-slate-200"></div>
-                          <span class="rounded-full bg-slate-100 px-2 py-1 text-[10px] font-medium text-slate-500">取得データ</span>
-                        </div>
-                        <div class="mt-3 rounded-xl bg-slate-50 p-3">
-                          <div class="h-7 w-24 rounded bg-slate-800"></div>
-                          <div class="mt-4 h-20 rounded-xl bg-slate-100"></div>
-                        </div>
-                      </div>
+            <div class="mt-6">
+              <svg id="cmp-svg" viewBox="0 0 680 260" class="w-full" role="img" aria-label="商品点数の積み上げ概念図。環境を増やした場合と増やさなかった場合の2本の曲線。早く増やすほど差が開くイメージ。縦軸は目盛りなし。">
+                <line x1="48" y1="20" x2="48" y2="220" stroke="#cbd5e1" stroke-width="1"></line>
+                <line x1="48" y1="220" x2="470" y2="220" stroke="#cbd5e1" stroke-width="1"></line>
+                <text x="20" y="120" transform="rotate(-90 20 120)" text-anchor="middle" font-size="11" fill="#94a3b8">商品点数（イメージ）</text>
+                <text x="259" y="248" text-anchor="middle" font-size="11" fill="#94a3b8">経過月数</text>
+                <path id="cmp-area" fill="rgba(70,116,147,0.08)" stroke="none"></path>
+                <path id="cmp-late" fill="none" stroke="#94a3b8" stroke-width="2.5" stroke-dasharray="6 5" stroke-linecap="round"></path>
+                <path id="cmp-early" fill="none" stroke="#467493" stroke-width="3" stroke-linecap="round"></path>
+                <circle id="cmp-dot-early" r="4.5" fill="#467493"></circle>
+                <circle id="cmp-dot-late" r="4" fill="#94a3b8"></circle>
+                <text id="cmp-label-early" text-anchor="start" font-size="11" font-weight="700" fill="#365c76"></text>
+                <text id="cmp-label-late" text-anchor="start" font-size="11" font-weight="500" fill="#94a3b8"></text>
+                <g id="cmp-gap" style="display:none">
+                  <line id="cmp-gap-line" stroke="#467493" stroke-width="1" stroke-dasharray="3 3"></line>
+                  <text id="cmp-gap-label" text-anchor="start" font-size="11" font-weight="500" fill="#365c76"></text>
+                </g>
+              </svg>
+            </div>
 
-                      <div class="rounded-2xl bg-white p-4 shadow-sm">
-                        <div class="flex items-center justify-between">
-                          <p class="text-xs font-semibold uppercase tracking-[0.14em] text-slate-500">作業キュー</p>
-                          <span class="text-[11px] text-slate-400">切替後に反映</span>
-                        </div>
-                        <div class="mt-4 space-y-3">
-                          <div class="flex items-center gap-3 rounded-xl bg-slate-50 px-3 py-3">
-                            <span class="h-2.5 w-2.5 rounded-full bg-brand-500"></span>
-                            <div class="h-3 flex-1 rounded bg-slate-200"></div>
-                          </div>
-                          <div class="flex items-center gap-3 rounded-xl bg-slate-50 px-3 py-3">
-                            <span class="h-2.5 w-2.5 rounded-full bg-slate-300"></span>
-                            <div class="h-3 flex-1 rounded bg-slate-200"></div>
-                          </div>
-                          <div class="flex items-center gap-3 rounded-xl bg-slate-50 px-3 py-3">
-                            <span class="h-2.5 w-2.5 rounded-full bg-slate-300"></span>
-                            <div class="h-3 flex-1 rounded bg-slate-200"></div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
+            <p class="mt-6 border-t border-slate-100 pt-4 text-xs leading-6 text-slate-400">
+              ※上図は運用イメージであり、具体的な成果や数値を保証するものではありません。効果には個人差があります。
+            </p>
+          </div>
+          <div class="mt-8 overflow-hidden rounded-[28px] border border-brand-200 bg-gradient-to-br from-brand-50 via-white to-white p-6 shadow-card sm:p-8">
+            <div class="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
+              <div class="max-w-2xl">
+                <h3 class="text-2xl font-bold text-slate-900">使い慣れた統合ツールを、もう1アカウント</h3>
+                <p class="mt-3 text-sm leading-7 text-slate-600">
+                  新しい仕組みを覚え直す必要はありません。情報取得を並行化し、待機時間を分散することで、
+                  同じ作業時間のまま運用効率をもう一段高められます。
+                </p>
+              </div>
+              <div class="shrink-0">
+                <a
+                  href="https://payment.nextjp.co.jp/subscribe/uAzExW/"
+                  onclick="gtag('event', 'cta_click', {cta_location: 'after_image', cta_type: 'subscribe', lp: 'japan'});"
+                  class="cta-pulse inline-flex w-full items-center justify-center rounded-xl bg-brand-700 px-8 py-4 text-base font-bold text-white shadow-soft transition-all duration-200 hover:scale-[1.02] hover:bg-brand-800 focus:outline-none focus:ring-4 focus:ring-brand-200 lg:w-auto"
+                >
+                  追加アカウントを申し込む →
+                </a>
+                <p class="mt-2 text-center text-xs leading-6 text-slate-500">1日あたり約367円 / 月額¥11,000(税込)</p>
               </div>
             </div>
           </div>
@@ -332,7 +461,65 @@
             </p>
           </div>
 
-          <div class="mt-12 grid gap-6 lg:grid-cols-[1fr_auto_1fr] lg:items-stretch">
+          <!-- グラフ風図解:1→2アカウントの相対比較（断定数値ではなくイメージ） -->
+          <div class="mt-10 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+            <div class="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+              <h3 class="text-lg font-bold text-slate-900">同じ作業時間での変化イメージ</h3>
+              <div class="flex items-center gap-4 text-xs text-slate-500">
+                <span class="inline-flex items-center gap-1.5"><span class="h-2.5 w-2.5 rounded-sm bg-slate-300"></span>1アカウント</span>
+                <span class="inline-flex items-center gap-1.5"><span class="h-2.5 w-2.5 rounded-sm bg-brand-600"></span>2アカウント</span>
+              </div>
+            </div>
+
+            <div class="mt-7 grid gap-7 sm:grid-cols-3">
+              <!-- 指標1 -->
+              <div>
+                <p class="text-sm font-semibold text-slate-700">情報取得の並行数</p>
+                <div class="mt-4 flex items-end gap-4 border-b border-slate-100" style="height:120px">
+                  <div class="flex-1 rounded-t-lg bg-slate-200" style="height:40px"></div>
+                  <div class="flex-1 rounded-t-lg bg-brand-600" style="height:80px"></div>
+                </div>
+                <div class="mt-2 flex gap-4 text-xs">
+                  <span class="flex-1 text-center text-slate-400">Before</span>
+                  <span class="flex-1 text-center font-medium text-brand-700">After</span>
+                </div>
+              </div>
+              <!-- 指標2 -->
+              <div>
+                <p class="text-sm font-semibold text-slate-700">待機による停滞時間</p>
+                <div class="mt-4 flex items-end gap-4 border-b border-slate-100" style="height:120px">
+                  <div class="flex-1 rounded-t-lg bg-amber-200" style="height:96px"></div>
+                  <div class="flex-1 rounded-t-lg bg-amber-300" style="height:44px"></div>
+                </div>
+                <div class="mt-2 flex gap-4 text-xs">
+                  <span class="flex-1 text-center text-slate-400">Before</span>
+                  <span class="flex-1 text-center font-medium text-amber-700">After</span>
+                </div>
+              </div>
+              <!-- 指標3 -->
+              <div>
+                <p class="text-sm font-semibold text-slate-700">精査に充てられる回数</p>
+                <div class="mt-4 flex items-end gap-4 border-b border-slate-100" style="height:120px">
+                  <div class="flex-1 rounded-t-lg bg-slate-200" style="height:42px"></div>
+                  <div class="flex-1 rounded-t-lg bg-brand-600" style="height:86px"></div>
+                </div>
+                <div class="mt-2 flex gap-4 text-xs">
+                  <span class="flex-1 text-center text-slate-400">Before</span>
+                  <span class="flex-1 text-center font-medium text-brand-700">After</span>
+                </div>
+              </div>
+            </div>
+
+            <p class="mt-6 border-t border-slate-100 pt-4 text-xs leading-6 text-slate-400">
+              ※効果には個人差があります。上図は運用イメージであり、具体的な数値を保証するものではありません。
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="fade-in pb-4">
+        <div class="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
+          <div class="grid gap-6 lg:grid-cols-[1fr_auto_1fr] lg:items-stretch">
             <div class="rounded-3xl border border-slate-200 bg-white p-7 shadow-sm">
               <div class="mb-6 inline-flex rounded-full bg-slate-100 px-4 py-2 text-sm font-semibold text-slate-700">Before</div>
               <h3 class="text-2xl font-bold text-slate-900">導入前の課題</h3>
@@ -504,7 +691,7 @@
                     休止フォーム：
                     <a
                       href="https://partner.nextjp.co.jp/forms/forms600#input"
-                      onclick="gtag('event', 'cta_click', {cta_location: 'faq_pause_form', cta_type: 'pause_request'});"
+                      onclick="gtag('event', 'cta_click', {cta_location: 'faq_pause_form', cta_type: 'pause_request', lp: 'japan'});"
                       class="font-medium text-brand-700 underline decoration-brand-300 underline-offset-4 hover:text-brand-800"
                     >
                       https://partner.nextjp.co.jp/forms/forms600#input
@@ -572,8 +759,8 @@
                 <div class="mt-6">
                   <a
                     href="https://payment.nextjp.co.jp/subscribe/uAzExW/"
-                    onclick="gtag('event', 'cta_click', {cta_location: 'middle', cta_type: 'subscribe'});"
-                    class="inline-flex w-full items-center justify-center rounded-xl bg-brand-700 px-7 py-4 text-base font-bold text-white transition-all duration-200 hover:scale-[1.02] hover:bg-brand-800 focus:outline-none focus:ring-4 focus:ring-brand-200"
+                    onclick="gtag('event', 'cta_click', {cta_location: 'middle', cta_type: 'subscribe', lp: 'japan'});"
+                    class="cta-pulse inline-flex w-full items-center justify-center rounded-xl bg-brand-700 px-7 py-4 text-base font-bold text-white transition-all duration-200 hover:scale-[1.02] hover:bg-brand-800 focus:outline-none focus:ring-4 focus:ring-brand-200"
                   >
                     追加アカウントを申し込む →
                   </a>
@@ -592,8 +779,8 @@
       <div class="bg-white px-4 py-3 shadow-[0_-4px_20px_rgba(35,61,79,0.08)]">
         <a
           href="https://payment.nextjp.co.jp/subscribe/uAzExW/"
-          onclick="gtag('event', 'cta_click', {cta_location: 'sticky_mobile', cta_type: 'subscribe'});"
-          class="pointer-events-auto inline-flex w-full items-center justify-center rounded-xl bg-brand-700 px-6 py-4 text-base font-bold text-white transition-all duration-200 hover:scale-[1.02] hover:bg-brand-800 focus:outline-none focus:ring-4 focus:ring-brand-200"
+          onclick="gtag('event', 'cta_click', {cta_location: 'sticky_mobile', cta_type: 'subscribe', lp: 'japan'});"
+          class="cta-pulse pointer-events-auto inline-flex w-full items-center justify-center rounded-xl bg-brand-700 px-6 py-4 text-base font-bold text-white transition-all duration-200 hover:scale-[1.02] hover:bg-brand-800 focus:outline-none focus:ring-4 focus:ring-brand-200"
         >
           追加アカウントを申し込む →
         </a>
@@ -624,6 +811,42 @@
     }, { threshold: 0.15 });
 
     document.querySelectorAll(".fade-in").forEach((el) => observer.observe(el));
+
+    const tlf = document.getElementById("tlf");
+    if (tlf) {
+      tlf.classList.add("tlf-armed");
+      const tlfObserver = new IntersectionObserver((entries, obs) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-playing");
+            obs.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.4 });
+      tlfObserver.observe(tlf);
+    }
+
+    // スクロール深度の計測:GA4標準のscroll(90%)では離脱点が見えないため、25/50/75%で計測
+    (function () {
+      const marks = [25, 50, 75];
+      const fired = {};
+      const onScroll = () => {
+        const doc = document.documentElement;
+        const scrollable = doc.scrollHeight - window.innerHeight;
+        if (scrollable <= 0) return;
+        const pct = (window.scrollY / scrollable) * 100;
+        marks.forEach((m) => {
+          if (!fired[m] && pct >= m) {
+            fired[m] = true;
+            gtag('event', 'scroll_depth', { percent: m, lp: 'japan' });
+          }
+        });
+        if (marks.every((m) => fired[m])) {
+          window.removeEventListener('scroll', onScroll);
+        }
+      };
+      window.addEventListener('scroll', onScroll, { passive: true });
+    })();
 
     document.querySelectorAll(".faq-toggle").forEach((button) => {
       button.addEventListener("click", () => {
@@ -662,6 +885,70 @@
         }
       });
     }
+
+    (function () {
+      const early = document.getElementById("cmp-early");
+      if (!early) return;
+      const late = document.getElementById("cmp-late");
+      const area = document.getElementById("cmp-area");
+      const dotE = document.getElementById("cmp-dot-early");
+      const dotL = document.getElementById("cmp-dot-late");
+      const labelE = document.getElementById("cmp-label-early");
+      const labelL = document.getElementById("cmp-label-late");
+      const gap = document.getElementById("cmp-gap");
+      const gapLine = document.getElementById("cmp-gap-line");
+      const gapLabel = document.getElementById("cmp-gap-label");
+
+      const X0 = 48, X1 = 470, Y0 = 220, Y1 = 30;  // X1を狭めて右側に終点ラベル余白を確保
+      const LATE_START = 3;           // 増やさなかった場合は出遅れる想定
+      const GROWTH = 1.34;            // 積み上げ(複利的)カーブ係数
+      const TOTAL = 12;
+
+      const maxVal = Math.pow(GROWTH, TOTAL) - 1;
+      const px = (m) => X0 + (X1 - X0) * (m / TOTAL);
+      const py = (v) => Y0 - (Y0 - Y1) * (v / maxVal);
+      const earlyVal = (m) => Math.pow(GROWTH, m) - 1;
+      const lateVal = (m) => m <= LATE_START ? 0 : Math.pow(GROWTH, m - LATE_START) - 1;
+
+      function buildPath(fn, upto) {
+        let d = "";
+        for (let m = 0; m <= upto; m += 0.25) {
+          const X = px(m), Y = py(fn(m));
+          d += (d === "" ? "M" : "L") + X.toFixed(1) + " " + Y.toFixed(1);
+        }
+        return d;
+      }
+
+      function draw() {
+        const months = TOTAL; // 初めから最大の差を表示
+        early.setAttribute("d", buildPath(earlyVal, months));
+        late.setAttribute("d", buildPath(lateVal, months));
+        area.setAttribute("d", buildPath(earlyVal, months) + "L" + px(months).toFixed(1) + " " + Y0 + "L" + X0 + " " + Y0 + "Z");
+
+        const eX = px(months), eY = py(earlyVal(months)), lY = py(lateVal(months));
+        dotE.setAttribute("cx", eX); dotE.setAttribute("cy", eY);
+        dotL.setAttribute("cx", eX); dotL.setAttribute("cy", lY);
+
+        // 終点ラベル(2行)
+        labelE.setAttribute("x", eX + 10); labelE.setAttribute("y", eY + 4);
+        labelE.textContent = "環境を増やした場合";
+        labelL.setAttribute("x", eX + 10); labelL.setAttribute("y", lY + 4);
+        labelL.textContent = "増やさなかった場合";
+
+        // 差の縦線
+        gap.style.display = "";
+        gapLine.setAttribute("x1", eX); gapLine.setAttribute("y1", eY);
+        gapLine.setAttribute("x2", eX); gapLine.setAttribute("y2", lY);
+        gapLabel.setAttribute("x", eX + 10);
+        gapLabel.setAttribute("y", (eY + lY) / 2 + 4);
+        gapLabel.setAttribute("text-anchor", "start");
+        gapLabel.setAttribute("fill", "#365c76");
+        gapLabel.setAttribute("font-weight", "700");
+        gapLabel.textContent = "この差が、商品数の差。";
+      }
+
+      draw();
+    })();
   </script>
 </body>
 </html>
